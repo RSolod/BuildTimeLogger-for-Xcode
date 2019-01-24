@@ -9,10 +9,10 @@
 import Foundation
 
 enum BuildHistoryEntryKey: String {
-	case buildTime
-	case schemeName
+	case buildTime = "entry.828447071"
+	case schemeName = "entry.1409414588"
 	case timestamp
-	case username
+	case username = "entry.40726498"
 }
 
 struct BuildHistoryEntry {

@@ -34,7 +34,7 @@ final class BuildTimeLoggerApp {
 		case 2:
 			print("Updating local build history...")
 			updateBuildHistory()
-			showNotification()
+//            showNotification()
 
 			guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else {
 				return
@@ -52,7 +52,7 @@ final class BuildTimeLoggerApp {
 		default:
 			print("Updating local build history...")
 			updateBuildHistory()
-			showNotification()
+//            showNotification()
 		}
 	}
 
