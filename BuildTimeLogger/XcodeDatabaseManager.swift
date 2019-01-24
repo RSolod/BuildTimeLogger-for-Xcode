@@ -17,6 +17,8 @@ struct XcodeDatabaseManager {
 		guard let latestBuildDatabase = dataSource.first else {
 			return nil
 		}
+        
+        guard latestBuildDatabase.isBuildType else { return nil }
 
 		return latestBuildDatabase
 	}

@@ -38,7 +38,7 @@ struct XcodeDatabase {
 	var timeStoppedRecording: Int
 
 	var isBuildType: Bool {
-		return title.hasPrefix("Build ") ||  title.hasPrefix("Compile ")
+		return title.hasPrefix("Build ") ||  title.hasPrefix("Compile ") || title.hasPrefix("Archive ")
 	}
 
 	var url: URL {
