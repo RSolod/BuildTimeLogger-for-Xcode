@@ -38,8 +38,21 @@ struct XcodeDatabase {
 	var timeStoppedRecording: Int
 
 	var isBuildType: Bool {
-		return title.hasPrefix("Build ") ||  title.hasPrefix("Compile ") || title.hasPrefix("Archive ")
+		return title.hasPrefix("Build ")
 	}
+    
+    var currentType: BuildHistoryEntryType {
+        if isBuildType {
+            return .build
+        }
+        if title.hasPrefix("Archive ") {
+            return .archive
+        }
+        if title.hasPrefix("Clean") {
+            return .clean
+        }
+        return .undefined
+    }
 
 	var url: URL {
 		return URL(fileURLWithPath: path)

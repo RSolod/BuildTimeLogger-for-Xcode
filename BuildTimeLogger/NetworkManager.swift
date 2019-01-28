@@ -20,33 +20,24 @@ final class NetworkManager {
 	}
 
 	// TODO: use single BuildHistoryEntry object as an argument.
-	func sendData(username: String, timestamp: Int, buildTime: Int, schemeName: String, systemInfo: SystemInfo?) {
+    func sendData(username: String, timestamp: Int, buildTime: Int, schemeName: String, buildType: String) {
 		let semaphore = DispatchSemaphore(value: 0)
 
-		var data: [String: Any] = [
+		let data: [String: Any] = [
 			BuildHistoryEntryKey.username.rawValue: username,
 			BuildHistoryEntryKey.timestamp.rawValue: timestamp,
 			BuildHistoryEntryKey.buildTime.rawValue: buildTime,
-			BuildHistoryEntryKey.schemeName.rawValue: schemeName
+			BuildHistoryEntryKey.schemeName.rawValue: schemeName,
+            BuildHistoryEntryKey.type.rawValue: buildType
 		]
         var urlComponents = URLComponents(string: remoteStorageURL.absoluteString)!
         urlComponents.queryItems = [
             URLQueryItem(name: BuildHistoryEntryKey.username.rawValue, value: username),
             URLQueryItem(name: BuildHistoryEntryKey.buildTime.rawValue, value: "\(buildTime)"),
-            URLQueryItem(name: BuildHistoryEntryKey.schemeName.rawValue, value: schemeName)]
+            URLQueryItem(name: BuildHistoryEntryKey.schemeName.rawValue, value: schemeName),
+            URLQueryItem(name: BuildHistoryEntryKey.type.rawValue, value: buildType)]
         var request = URLRequest(url: urlComponents.url!)
         request.httpMethod = "POST"
-
-//        if let systemInfo = systemInfo {
-//            data[HardwareInfoKey.cpuType.rawValue] = systemInfo.hardware.cpuType
-//            data[HardwareInfoKey.cpuSpeed.rawValue] = systemInfo.hardware.cpuSpeed
-//            data[HardwareInfoKey.machineModel.rawValue] = systemInfo.hardware.machineModel
-//            data[HardwareInfoKey.physicalMemory.rawValue] = systemInfo.hardware.physicalMemory
-//            data[HardwareInfoKey.numberOfProcessors.rawValue] = systemInfo.hardware.numberOfProcessors
-//            data[DevToolsInfoKey.devToolsVersion.rawValue] = systemInfo.devTools.version
-//        }
-
-//        let postString = formatPOSTString(data: data)
         let jsonData = try? JSONSerialization.data(withJSONObject: data, options: [])
         let jsonString = String(data: jsonData!, encoding: String.Encoding.utf8)!
         request.httpBody = jsonString.data(using: .utf8)

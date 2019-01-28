@@ -32,7 +32,7 @@ final class BuildTimeLoggerApp {
 
 	func run() {
         updateBuildHistory()
-            showNotification()
+        showNotification()
         guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else { return }
         if let remoteStorageURL = URL(string: urlString) {
             storeDataRemotely(buildData: latestBuildData, atURL: remoteStorageURL)
@@ -40,9 +40,8 @@ final class BuildTimeLoggerApp {
 	}
 
 	private func storeDataRemotely(buildData: BuildHistoryEntry, atURL url: URL) {
-		let systemInfo = systemInfoManager.read()
 		let networkManager = NetworkManager(remoteStorageURL: url)
-		networkManager.sendData(username: buildData.username, timestamp: Int(NSDate().timeIntervalSince1970), buildTime: buildData.buildTime, schemeName: buildData.schemeName, systemInfo: systemInfo)
+		networkManager.sendData(username: buildData.username, timestamp: Int(NSDate().timeIntervalSince1970), buildTime: buildData.buildTime, schemeName: buildData.schemeName, buildType: buildData.type.rawValue)
 	}
 
 	private func showNotification() {
@@ -55,11 +54,12 @@ final class BuildTimeLoggerApp {
 
 		let latestBuildTimeFormatted = TimeFormatter.format(time: latestBuildData.buildTime)
 		let totalBuildsTimeTodayFormatted = TimeFormatter.format(time: totalTime)
+        let buildType = latestBuildData.type.rawValue
 
 		let numberOfBuildsToday = buildEntriesFromToday.count
 		let averageBuildtimeToday = TimeFormatter.format(time: totalTime / numberOfBuildsToday)
 
-		notificationManager.showNotification(message: "current          \(latestBuildTimeFormatted)\ntotal today    \(totalBuildsTimeTodayFormatted) / avg \(averageBuildtimeToday) / \(numberOfBuildsToday) builds")
+		notificationManager.showNotification(message: "current          \(latestBuildTimeFormatted), type        \(buildType)\ntotal today    \(totalBuildsTimeTodayFormatted) / avg \(averageBuildtimeToday) / \(numberOfBuildsToday) builds")
 	}
 
 	private func updateBuildHistory() {

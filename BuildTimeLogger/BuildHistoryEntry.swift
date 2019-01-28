@@ -13,6 +13,14 @@ enum BuildHistoryEntryKey: String {
 	case schemeName = "entry.1409414588"
 	case timestamp
 	case username = "entry.40726498"
+    case type = "entry.334614319"
+}
+
+enum BuildHistoryEntryType: String {
+    case clean
+    case build
+    case archive
+    case undefined
 }
 
 struct BuildHistoryEntry {
@@ -20,13 +28,15 @@ struct BuildHistoryEntry {
 	let schemeName: String
 	let date: Date
 	let username: String
+    let type: BuildHistoryEntryType
 
 	var serialized: [String: Any] {
 		return [
 			BuildHistoryEntryKey.buildTime.rawValue: buildTime,
 			BuildHistoryEntryKey.schemeName.rawValue: schemeName,
 			BuildHistoryEntryKey.timestamp.rawValue: date.timeIntervalSince1970,
-			BuildHistoryEntryKey.username.rawValue: username
+			BuildHistoryEntryKey.username.rawValue: username,
+            BuildHistoryEntryKey.type.rawValue: type.rawValue
 		]
 	}
 }
