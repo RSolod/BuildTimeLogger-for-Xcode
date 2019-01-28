@@ -14,6 +14,7 @@ final class BuildTimeLoggerApp {
 	private let dataParser: DataParser
 	private let xcodeDatabaseManager: XcodeDatabaseManager
 	private let systemInfoManager: SystemInfoManager
+    private let urlString = "https://docs.google.com/forms/d/e/1FAIpQLSdfGtMRF7MToMBfhp6pufLZ1cohRDb40J5RL3EwdcRJR5wuKw/formResponse"
 
 	private var buildHistory: [BuildHistoryEntry]?
 
@@ -30,30 +31,12 @@ final class BuildTimeLoggerApp {
 	}
 
 	func run() {
-		switch CommandLine.arguments.count {
-		case 2:
-			print("Updating local build history...")
-			updateBuildHistory()
-//            showNotification()
-
-			guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else {
-				return
-			}
-
-			print("Storing data remotely...")
-			if let remoteStorageURL = URL(string: CommandLine.arguments[1]) {
-				storeDataRemotely(buildData: latestBuildData, atURL: remoteStorageURL)
-			}
-		case 3:
-			print("Fetching remote data...")
-			if let remoteStorageURL = URL(string: CommandLine.arguments[1]) {
-				fetchRemoteData(atURL: remoteStorageURL)
-			}
-		default:
-			print("Updating local build history...")
-			updateBuildHistory()
-//            showNotification()
-		}
+        updateBuildHistory()
+            showNotification()
+        guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else { return }
+        if let remoteStorageURL = URL(string: urlString) {
+            storeDataRemotely(buildData: latestBuildData, atURL: remoteStorageURL)
+        }
 	}
 
 	private func fetchRemoteData(atURL url: URL) {
