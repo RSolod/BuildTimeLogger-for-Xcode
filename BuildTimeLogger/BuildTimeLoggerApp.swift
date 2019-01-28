@@ -32,7 +32,7 @@ final class BuildTimeLoggerApp {
 
 	func run() {
         updateBuildHistory()
-        showNotification()
+//        showNotification()
         guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else { return }
         if let remoteStorageURL = URL(string: urlString) {
             storeDataRemotely(buildData: latestBuildData, atURL: remoteStorageURL)
