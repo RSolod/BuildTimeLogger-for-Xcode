@@ -39,18 +39,6 @@ final class BuildTimeLoggerApp {
         }
 	}
 
-	private func fetchRemoteData(atURL url: URL) {
-		let networkManager = NetworkManager(remoteStorageURL: url)
-		networkManager.fetchData { [weak self] result in
-			switch result {
-			case .success(let data):
-				self?.dataParser.parse(data: data)
-			case .failure:
-				print("error")
-			}
-		}
-	}
-
 	private func storeDataRemotely(buildData: BuildHistoryEntry, atURL url: URL) {
 		let systemInfo = systemInfoManager.read()
 		let networkManager = NetworkManager(remoteStorageURL: url)
