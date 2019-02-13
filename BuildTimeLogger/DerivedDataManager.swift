@@ -26,6 +26,7 @@
 //
 
 import Foundation
+import os
 
 class DerivedDataManager {
     
@@ -41,6 +42,7 @@ class DerivedDataManager {
                 let modificationDate = properties[FileAttributeKey.modificationDate] as? Date {
                 return File(date: modificationDate, url: url)
             }
+            os_log("No module cache in derived data were found", log: .missingData, type: .error)
             return nil
         }.sorted{ $0.date > $1.date }
     }
@@ -50,7 +52,10 @@ class DerivedDataManager {
         let keys = [URLResourceKey.nameKey, URLResourceKey.isDirectoryKey]
         let options: FileManager.DirectoryEnumerationOptions = [.skipsHiddenFiles, .skipsPackageDescendants, .skipsSubdirectoryDescendants]
         
-        guard let enumerator = fileManager.enumerator(at: url, includingPropertiesForKeys: keys, options: options, errorHandler: nil) else { return [] }
+        guard let enumerator = fileManager.enumerator(at: url, includingPropertiesForKeys: keys, options: options, errorHandler: nil) else {
+            os_log("No enumerator were found", log: .missingData, type: .error)
+            return []
+        }
         
         return enumerator.map{ $0 as! URL }
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 enum NetworkError: Error {
 	case didFailToFetchData
@@ -43,7 +44,7 @@ final class NetworkManager {
         request.httpBody = jsonString.data(using: .utf8)
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
 			if let error = error {
-				print("error: \(error)")
+                os_log("HTTP error: %@", log: .responseError, type: .error, error.localizedDescription)
 			}
 
 			semaphore.signal()
@@ -60,6 +61,7 @@ final class NetworkManager {
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
 			guard let data = data, error == nil else {
 				completion(.failure(NetworkError.didFailToFetchData))
+                os_log("HTTP error: %@", log: .responseError, type: .error, error!.localizedDescription)
 				return
 			}
 

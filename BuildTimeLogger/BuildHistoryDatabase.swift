@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 enum BuildHistoryDatabaseKey: String {
 	case buildHistory
@@ -20,6 +21,7 @@ struct BuildHistoryDatabase {
 
 	func read() -> [BuildHistoryEntry]? {
 		guard let buildHistorySerialized = UserDefaults.standard.object(forKey: BuildHistoryDatabaseKey.buildHistory.rawValue) as? [[String: Any]] else {
+            os_log("Can't serialized data from BuildHistoryDatabase", log: .serializedError, type: .error)
 			return nil
 		}
 
@@ -33,7 +35,7 @@ struct BuildHistoryDatabase {
 				let username = $0[BuildHistoryEntryKey.username.rawValue] as? String ?? "unknown"
                 return BuildHistoryEntry(buildTime: buildTime, schemeName: schemeName, date: Date(timeIntervalSince1970: timestamp), username: username, type: BuildHistoryEntryType(rawValue: buildType)!)
 			}
-
+            os_log("Can't get build history from BuildHistoryDatabase", log: .wrapError, type: .error)
 			return nil
 		})
 

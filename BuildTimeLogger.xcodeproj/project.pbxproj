@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		308CD85B22017BD800D55EE3 /* OSLog+Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308CD85A22017BD800D55EE3 /* OSLog+Variables.swift */; };
 		DA29A7651E808BC10071865D /* HardwareInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29A7641E808BC10071865D /* HardwareInfo.swift */; };
 		DA29A7671E808BDB0071865D /* SystemInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29A7661E808BDB0071865D /* SystemInfoManager.swift */; };
 		DA29A7691E80901E0071865D /* DevToolsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29A7681E80901E0071865D /* DevToolsInfo.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		308CD85A22017BD800D55EE3 /* OSLog+Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Variables.swift"; sourceTree = "<group>"; };
 		DA29A7641E808BC10071865D /* HardwareInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HardwareInfo.swift; sourceTree = "<group>"; };
 		DA29A7661E808BDB0071865D /* SystemInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemInfoManager.swift; sourceTree = "<group>"; };
 		DA29A7681E80901E0071865D /* DevToolsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevToolsInfo.swift; sourceTree = "<group>"; };
@@ -80,6 +82,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		308CD85922017B8D00D55EE3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				308CD85A22017BD800D55EE3 /* OSLog+Variables.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		DA362A861E5E076900660B80 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +109,7 @@
 		DA362A911E5E076900660B80 /* BuildTimeLogger */ = {
 			isa = PBXGroup;
 			children = (
+				308CD85922017B8D00D55EE3 /* Extensions */,
 				DACC7B3D1E70582400D43CB7 /* Helpers */,
 				DACC7B331E70535900D43CB7 /* Libraries */,
 				DA5B625F1E674121009DC651 /* Managers */,
@@ -243,6 +254,7 @@
 				DACC7B3A1E70538D00D43CB7 /* ResultProtocol.swift in Sources */,
 				DA5B625A1E67406E009DC651 /* BuildTimeLoggerApp.swift in Sources */,
 				DAD7141D1E6F207200F71993 /* NetworkManager.swift in Sources */,
+				308CD85B22017BD800D55EE3 /* OSLog+Variables.swift in Sources */,
 				DA29A76B1E80912F0071865D /* SystemInfo.swift in Sources */,
 				DA5B625C1E67409A009DC651 /* BuildHistoryDatabase.swift in Sources */,
 				DA29A7651E808BC10071865D /* HardwareInfo.swift in Sources */,
