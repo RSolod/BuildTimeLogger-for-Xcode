@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 struct XcodeDatabaseManager {
 	var latestBuildData: XcodeDatabase? {
@@ -15,6 +16,7 @@ struct XcodeDatabaseManager {
 		}.sorted(by: { $0.modificationDate > $1.modificationDate })
 
 		guard let latestBuildDatabase = dataSource.first else {
+            os_log("No build history or latest build data found in XcodeDatabaseManager", log: .wrapError, type: .fault)
 			return nil
 		}
 

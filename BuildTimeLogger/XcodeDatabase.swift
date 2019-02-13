@@ -26,6 +26,7 @@
 //
 
 import Foundation
+import os
 
 struct XcodeDatabase {
 	var path: String
@@ -80,7 +81,11 @@ struct XcodeDatabase {
 			let timeStoppedRecording = value["timeStoppedRecording"] as? NSNumber,
 			let fileAttributes = try? FileManager.default.attributesOfItem(atPath: path),
 			let modificationDate = fileAttributes[FileAttributeKey.modificationDate] as? Date
-			else { return nil }
+			else {
+                os_log("Cast error in XCodeDatabase", log: .missingData, type: .error)
+                return nil
+                
+        }
 
 		self.modificationDate = modificationDate
 		self.path = path
@@ -96,6 +101,7 @@ struct XcodeDatabase {
 			let data = (rawData as NSData).gunzipped() {
 			return String(data: data, encoding: String.Encoding.utf8)
 		}
+        os_log("Missing process log in XCodeDatabase", log: .missingData, type: .error)
 		return nil
 	}
 

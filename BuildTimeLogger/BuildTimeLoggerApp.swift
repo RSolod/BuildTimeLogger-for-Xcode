@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 final class BuildTimeLoggerApp {
 	private let buildHistoryDatabase: BuildHistoryDatabase
@@ -31,9 +32,13 @@ final class BuildTimeLoggerApp {
 	}
 
 	func run() {
+        os_log("Started run script", log: .appCycle, type: .info)
         updateBuildHistory()
 //        showNotification()
-        guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else { return }
+        guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else {
+            os_log("No build history or latest build data found in run() function", log: .wrapError, type: .fault)
+            return
+        }
         if let remoteStorageURL = URL(string: urlString) {
             storeDataRemotely(buildData: latestBuildData, atURL: remoteStorageURL)
         }
@@ -46,8 +51,9 @@ final class BuildTimeLoggerApp {
 
 	private func showNotification() {
 		guard let buildHistory = buildHistory, let latestBuildData = buildHistory.last else {
-			return
-		}
+            os_log("No build history or latest build data found", log: .wrapError, type: .fault)
+            return
+        }
 
 		let buildEntriesFromToday = dataParser.buildEntriesFromToday(in: buildHistory)
 		let totalTime = dataParser.totalBuildTime(for: buildEntriesFromToday)
@@ -64,6 +70,7 @@ final class BuildTimeLoggerApp {
 
 	private func updateBuildHistory() {
 		guard let latestBuildData = xcodeDatabaseManager.latestBuildData else {
+            os_log("No latest build data found in xcodeDatabaseManager", log: .wrapError, type: .fault);
 			return
 		}
 
